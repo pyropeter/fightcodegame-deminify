@@ -641,23 +641,42 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			return r
 		}, e.prototype.checkSight = function (e) {
 			var t, n, r, i, s, o, u, a, p, d, v, m;
-			t = new l(e), e.tickScan();
-			if (!e.canScan()) return t;
-			if (e.ignoredEvents.onScannedRobot) return t;
-			p = 2e3, u = 1, n = new h(e.rectangle.position.x + p / 2, e.rectangle.position.y - u / 2), n.rotate(e.cannonTotalAngle(), e.rectangle.position), a = new f(n.x, n.y, p, u, e.cannonTotalAngle()), s = null, i = Infinity, m = this.robotsStatus;
+			t = new l(e);
+			e.tickScan();
+			if (!e.canScan())
+				return t;
+			if (e.ignoredEvents.onScannedRobot)
+				return t;
+			p = 2e3;
+			u = 1;
+			n = new h(e.rectangle.position.x + p / 2, e.rectangle.position.y - u / 2);
+			n.rotate(e.cannonTotalAngle(), e.rectangle.position);
+			a = new f(n.x, n.y, p, u, e.cannonTotalAngle());
+			s = null;
+			i = Infinity;
+			m = this.robotsStatus;
 			for (d = 0, v = m.length; d < v; d++) {
 				o = m[d];
-				if (o === e || !o.isAlive()) continue;
-				if (!(o instanceof c)) continue;
+				if (o === e || !o.isAlive())
+					continue;
+				if (!(o instanceof c))
+					continue;
 				a.intersects(o.rectangle) && (r = h.subtract(o.rectangle.position, e.rectangle.position).module(), r < i && (s = o, i = r))
 			}
-			return s && !s.isInvisible && (e.preventScan(), t.ignore("onScannedRobot"), this.safeCall(e.robot.instance, "onScannedRobot", {
-				robot: t,
-				scannedRobot: this.basicEnemyInfo(s)
-			}), t.listen("onScannedRobot"), this.pushEventToLog({
-				type: "onScannedRobot",
-				id: e.id
-			})), t
+			s && !s.isInvisible && (
+				e.preventScan()
+				t.ignore("onScannedRobot")
+				this.safeCall(e.robot.instance, "onScannedRobot", {
+					robot: t,
+					scannedRobot: this.basicEnemyInfo(s)
+				}),
+				t.listen("onScannedRobot"),
+				this.pushEventToLog({
+					type: "onScannedRobot",
+					id: e.id
+				})
+			);
+			return t;
 		}, e.prototype.basicEnemyInfo = function (e) {
 			return {
 				id: e.id,
@@ -673,17 +692,23 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			if (this.keepTrackOfEvents) return this.roundLog.events.push(e)
 		}, e.prototype.fight = function () {
 			var e, t, n, r, i, s, o, u, a, f, h, p, d, v, m, g, y;
-			t = this.robotsStatus.length, n = [];
+			t = this.robotsStatus.length;
+			n = [];
 			while (t > 1 && !this.isDraw()) {
-				this.round++, n.push(this.roundLog = {
+				this.round++;
+				n.push(this.roundLog = {
 					round: this.round,
 					objects: [],
 					events: []
-				}), t = 0, g = this.robotsStatus;
+				});
+				t = 0;
+				g = this.robotsStatus;
 				for (f = 0, d = g.length; f < d; f++) {
 					a = g[f];
-					if (!a.isAlive()) continue;
-					a.roundLog = this.roundLog, this.pushObjectToLog({
+					if (!a.isAlive())
+						continue;
+					a.roundLog = this.roundLog;
+					this.pushObjectToLog({
 						type: a instanceof c ? "tank" : "bullet",
 						id: a.id,
 						name: a instanceof c ? a.robot.name : "bullet",
@@ -701,25 +726,35 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 						angle: a.rectangle.angle,
 						cannonAngle: a.cannonAngle,
 						parentId: a.parentStatus && a.parentStatus.id
-					}), a.isIdle() && (e = new l(a), this.safeCall(a.robot.instance, "onIdle", {
+					});
+					a.isIdle() && (e = new l(a), this.safeCall(a.robot.instance, "onIdle", {
 						robot: e
-					}), a.updateQueue(e)), a.isInvisible && a.decInvisibleRounds(), r = a.runItem(), r && (this.robotsStatus.push(r), r instanceof c && (this.findEmptyPosition(r), this.pushEventToLog({
+					}), a.updateQueue(e));
+					a.isInvisible && a.decInvisibleRounds();
+					r = a.runItem();
+					r && (this.robotsStatus.push(r), r instanceof c && (this.findEmptyPosition(r), this.pushEventToLog({
 						type: "cloned",
 						id: a.id,
 						cloneId: r.id
-					}))), e = this.checkCollision(a), e && a.updateQueue(e), a instanceof c && !a.isClone() && t++
+					})));
+					e = this.checkCollision(a);
+					e && a.updateQueue(e);
+					a instanceof c && !a.isClone() && t++;
 				}
 				y = this.robotsStatus;
 				for (h = 0, v = y.length; h < v; h++) {
 					a = y[h];
-					if (!(a.isAlive() && a instanceof c)) continue;
-					e = this.checkSight(a), a.updateQueue(e)
+					if (!(a.isAlive() && a instanceof c))
+						continue;
+					e = this.checkSight(a);
+					a.updateQueue(e);
 				}
 				this.roundLogCallback && this.roundLogCallback(this.roundLog)
 			}
 			s = this.robotsStatus.filter(function (e) {
 				return e instanceof c && !e.isClone()
-			}), o = s.sort(function (e, t) {
+			});
+			o = s.sort(function (e, t) {
 				var n, r;
 				return n = e.deathIdx ? e.deathIdx : e.life * 1e3, r = t.deathIdx ? t.deathIdx : t.life * 1e3, r - n
 			});

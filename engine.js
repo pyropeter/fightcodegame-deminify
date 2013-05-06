@@ -24,16 +24,28 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 	};
 	h = function () {
 		function e(t, n) {
-			this.x = t, this.y = n, this.x instanceof e && (this.y = this.x.y, this.x = this.x.x)
+			this.x = t;
+			this.y = n;
+			this.x instanceof e && (this.y = this.x.y, this.x = this.x.x)
 		}
 		return e.prototype.rotate = function (e, t) {
 			var n, r, i, s;
-			return e = e * Math.PI / 180, r = Math.sin(e), n = Math.cos(e), i = this.x - t.x, s = this.y - t.y, this.x = i * n - s * r + t.x, this.y = i * r + s * n + t.y, this
+			e = e * Math.PI / 180;
+			r = Math.sin(e);
+			n = Math.cos(e);
+			i = this.x - t.x;
+			s = this.y - t.y;
+			this.x = i * n - s * r + t.x;
+			this.y = i * r + s * n + t.y;
+			return this;
 		}, e.prototype.module = function () {
-			return Math.sqrt(this.x * this.x + this.y * this.y)
+			return Math.sqrt(this.x * this.x + this.y * this.y);
 		}, e.prototype.projectTo = function (t) {
 			var n, r, i;
-			return i = this.x * t.x + this.y * t.y, n = t.x * t.x + t.y * t.y, r = i / n, new e(r * t.x, r * t.y)
+			i = this.x * t.x + this.y * t.y;
+			n = t.x * t.x + t.y * t.y;
+			r = i / n;
+			return new e(r * t.x, r * t.y);
 		}, e.prototype.dot = function (e) {
 			return this.x * e.x + this.y * e.y
 		}, e.add = function (t, n) {
@@ -218,7 +230,12 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			var t, n, r, i, s;
 			r = h.subtract(this.position, e.position).module();
 			if (r > this.radius + e.radius) return !1;
-			n = [h.subtract(this.upperRight, this.upperLeft), h.subtract(this.upperRight, this.lowerRight), h.subtract(e.upperRight, e.upperLeft), h.subtract(e.upperRight, e.lowerRight)];
+			n = [
+				h.subtract(this.upperRight, this.upperLeft),
+				h.subtract(this.upperRight, this.lowerRight),
+				h.subtract(e.upperRight, e.upperLeft),
+				h.subtract(e.upperRight, e.lowerRight)
+			];
 			for (i = 0, s = n.length; i < s; i++) {
 				t = n[i];
 				if (!this.isAxisCollision(e, t)) return !1
@@ -297,14 +314,47 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 	}(r);
 	c = function (t) {
 		function r(e, t) {
-			this.robot = e, this.arena = t, r.__super__.constructor.call(this), this._invisibleRounds = 200, this.life = 100, this.cannonAngle = 0, this.rectangle.setDimension(27, 24), this.baseScanWaitTime = 50, this.baseGunCoolDownTime = 50, this.scanWaitTime = 0, this.gunCoolDownTime = 0, this.availableClones = 1, this.availableDisappears = 1, this.queue = [], this.clones = [], this.parentStatus = null, this.bulletsFired = 0, this.bulletsHit = 0, this.bulletsTaken = 0, this.deathIdx = null, this.enemiesKilled = 0, this.friendsKilled = 0, this.ignoredEvents = {}, this.accidentalCollisions = {}, this.isInvisible = !1
+			this.robot = e;
+			this.arena = t;
+			r.__super__.constructor.call(this);
+			this._invisibleRounds = 200;
+			this.life = 100;
+			this.cannonAngle = 0;
+			this.rectangle.setDimension(27, 24);
+			this.baseScanWaitTime = 50;
+			this.baseGunCoolDownTime = 50;
+			this.scanWaitTime = 0;
+			this.gunCoolDownTime = 0;
+			this.availableClones = 1;
+			this.availableDisappears = 1;
+			this.queue = [];
+			this.clones = [];
+			this.parentStatus = null;
+			this.bulletsFired = 0;
+			this.bulletsHit = 0;
+			this.bulletsTaken = 0;
+			this.deathIdx = null;
+			this.enemiesKilled = 0;
+			this.friendsKilled = 0;
+			this.ignoredEvents = {};
+			this.accidentalCollisions = {};
+			this.isInvisible = !1;
 		}
 		return __extends(r, t), r.deathOrder = 1, r.prototype.instantiateRobot = function () {
 			var e;
-			return e = new l(this), this.robot.instance = new this.robot.constructor(e), this.updateQueue(e)
+			e = new l(this);
+			this.robot.instance = new this.robot.constructor(e);
+			return this.updateQueue(e);
 		}, r.prototype.clone = function () {
 			var e;
-			return e = new r(this.robot, this.arena), e.rectangle.setAngle(this.rectangle.angle), e.rectangle.setPosition(this.rectangle.position.x, this.rectangle.position.y), e.life = this.life / 4, e.availableClones = 0, e.parentStatus = this, this.clones.push(e), e
+			e = new r(this.robot, this.arena);
+			e.rectangle.setAngle(this.rectangle.angle);
+			e.rectangle.setPosition(this.rectangle.position.x, this.rectangle.position.y);
+			e.life = this.life / 4;
+			e.availableClones = 0;
+			e.parentStatus = this;
+			this.clones.push(e);
+			return e;
 		}, r.prototype.disappear = function () {
 			this.isInvisible = !0, this.pushEventToLog({
 				type: "beginInvisibility",
@@ -335,7 +385,9 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			}
 		}, r.prototype.getAccidentalCollisions = function () {
 			var e;
-			return e = this.accidentalCollisions, this.accidentalCollisions = {}, e
+			e = this.accidentalCollisions;
+			this.accidentalCollisions = {};
+			return e;
 		}, r.prototype.addAccidentalCollision = function (e) {
 			return this.accidentalCollisions[e.id] = !0
 		}, r.prototype.isClone = function () {
@@ -346,8 +398,14 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			return this.queue.length === 0
 		}, r.prototype.takeHit = function (e) {
 			var t;
-			this.bulletsTaken++, this.life -= e.strength, e.destroy(), e.robotStatus.bulletsHit += 1;
-			if (!this.isAlive()) return this.deathIdx = r.deathOrder++, e.robotStatus.parentStatus === this || (t = e.robotStatus, __indexOf.call(this.clones, t) >= 0) ? e.robotStatus.friendsKilled += 1 : e.robotStatus.enemiesKilled += 1
+			this.bulletsTaken++;
+			this.life -= e.strength;
+			e.destroy();
+			e.robotStatus.bulletsHit += 1;
+			if (!this.isAlive()) {
+				this.deathIdx = r.deathOrder++;
+				return e.robotStatus.parentStatus === this || (t = e.robotStatus, __indexOf.call(this.clones, t) >= 0) ? e.robotStatus.friendsKilled += 1 : e.robotStatus.enemiesKilled += 1;
+			}
 		}, r.prototype.rollbackAfterCollision = function () {
 			this.previousPosition && this.rectangle.setPosition(this.previousPosition.x, this.previousPosition.y);
 			if (this.previousAngle) return this.rectangle.setAngle(this.previousAngle)
@@ -363,7 +421,9 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			if (this.queue.length > 0 && this.queue[0].started) return this.queue.shift()
 		}, r.prototype.runItem = function () {
 			var t, r, i, s, u;
-			this.gunCoolDownTime > 0 && this.gunCoolDownTime--, i = this.queue.shift(), u = !1;
+			this.gunCoolDownTime > 0 && this.gunCoolDownTime--;
+			i = this.queue.shift();
+			u = !1;
 			while (i) {
 				switch (i.action) {
 				case "ignore":
@@ -436,24 +496,64 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 	i = function () {
 		function e() {
 			var e, n, r, i, s, o, u, a, f, l, h;
-			a = arguments[0], e = arguments[1], r = arguments[2], i = arguments[3], n = arguments[4], u = 6 <= arguments.length ? __slice.call(arguments, 5) : [], this.maxTurns = r, this.randomFunc = i, this.keepTrackOfEvents = n, this.round = 0, this.arena = new t(a, e), this.robotsStatus = function () {
+			a = arguments[0];
+			e = arguments[1];
+			r = arguments[2];
+			i = arguments[3];
+			n = arguments[4];
+			u = 6 <= arguments.length ? __slice.call(arguments, 5) : [];
+			this.maxTurns = r;
+			this.randomFunc = i;
+			this.keepTrackOfEvents = n;
+			this.round = 0;
+			this.arena = new t(a, e);
+			this.robotsStatus = function () {
 				var e, t, n;
 				n = [];
-				for (e = 0, t = u.length; e < t; e++) s = u[e], n.push(new c(s, this.arena));
+				for (e = 0, t = u.length; e < t; e++) {
+					s = u[e];
+					n.push(new c(s, this.arena));
+				}
 				return n
-			}.call(this), this.deadStatuses = [], this.initPositions(), h = this.robotsStatus;
-			for (f = 0, l = h.length; f < l; f++) o = h[f], o.keepTrackOfEvents = this.keepTrackOfEvents, o.instantiateRobot()
+			}.call(this);
+			this.deadStatuses = [];
+			this.initPositions();
+			h = this.robotsStatus;
+			for (f = 0, l = h.length; f < l; f++) {
+				o = h[f];
+				o.keepTrackOfEvents = this.keepTrackOfEvents;
+				o.instantiateRobot();
+			}
 		}
 		return e.prototype.initPositions = function () {
 			var e, t, n, r, i, s, o, u, a;
-			u = this.robotsStatus, a = [];
-			for (s = 0, o = u.length; s < o; s++) n = u[s], t = n.robot.rectangle, t ? (n.rectangle.setPosition(t.position.x, t.position.y), a.push(n.rectangle.setAngle(t.angle))) : (r = Math.floor(this.randomFunc() * this.arena.rectangle.dimension.width), i = Math.floor(this.randomFunc() * this.arena.rectangle.dimension.height), e = Math.floor(this.randomFunc() * 360), n.rectangle.setAngle(e), n.rectangle.setPosition(r, i), this.findEmptyPosition(n), n.robot.rectangle = {}, n.robot.rectangle.position = new h(n.rectangle.position), a.push(n.robot.rectangle.angle = n.rectangle.angle));
+			u = this.robotsStatus;
+			a = [];
+			for (s = 0, o = u.length; s < o; s++) {
+				n = u[s];
+				t = n.robot.rectangle;
+				if (t) {
+					n.rectangle.setPosition(t.position.x, t.position.y), a.push(n.rectangle.setAngle(t.angle));
+				} else {
+					r = Math.floor(this.randomFunc() * this.arena.rectangle.dimension.width);
+					i = Math.floor(this.randomFunc() * this.arena.rectangle.dimension.height);
+					e = Math.floor(this.randomFunc() * 360);
+					n.rectangle.setAngle(e);
+					n.rectangle.setPosition(r, i);
+					this.findEmptyPosition(n);
+					n.robot.rectangle = {};
+					n.robot.rectangle.position = new h(n.rectangle.position);
+					a.push(n.robot.rectangle.angle = n.rectangle.angle));
+				}
+			}
 			return a
 		}, e.prototype.isDraw = function () {
 			return this.round > this.maxTurns
 		}, e.prototype.safeCall = function () {
 			var e, t, n;
-			t = arguments[0], e = arguments[1], n = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+			t = arguments[0];
+			e = arguments[1];
+			n = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
 			if (!t[e]) return;
 			try {
 				return t[e].apply(t, n)
@@ -470,23 +570,37 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			return !1
 		}, e.prototype.findEmptyPosition = function (e) {
 			var t, n, r, i, s, o, u, a, f, l, c, h, p, d;
-			n = this.arena.width, t = this.arena.height, a = e.rectangle.dimension.width, u = e.rectangle.dimension.height, r = e.rectangle.position.x, i = e.rectangle.position.y;
-			for (l = c = 0, p = t - 1; 0 <= p ? c <= p : c >= p; l = c += u) for (f = h = 0, d = n - 1; 0 <= d ? h <= d : h >= d; f = h += a) {
-					o = (l + i + u) % t, s = (f + r + a) % n, e.rectangle.setPosition(s, o);
-					if (!this.intersectsAnything(e)) return e
+			n = this.arena.width;
+			t = this.arena.height;
+			a = e.rectangle.dimension.width;
+			u = e.rectangle.dimension.height;
+			r = e.rectangle.position.x;
+			i = e.rectangle.position.y;
+			for (l = c = 0, p = t - 1; 0 <= p ? c <= p : c >= p; l = c += u) {
+				for (f = h = 0, d = n - 1; 0 <= d ? h <= d : h >= d; f = h += a) {
+					o = (l + i + u) % t;
+					s = (f + r + a) % n;
+					e.rectangle.setPosition(s, o);
+					if (!this.intersectsAnything(e))
+						return e
+				}
 			}
 			return !1
 		}, e.prototype.checkCollision = function (e) {
 			var t, r, i, s, o, u, a, f, p, v, m, g, y, b, w;
-			r = e instanceof c ? new l(e) : null, p = e.rectangle.containingCollisionAngle(this.arena.rectangle), p && (e.rollbackAfterCollision(), e instanceof n ? (e.destroy(), this.pushEventToLog({
+			r = e instanceof c ? new l(e) : null;
+			p = e.rectangle.containingCollisionAngle(this.arena.rectangle);
+			p && (e.rollbackAfterCollision(), e instanceof n ? (e.destroy(), this.pushEventToLog({
 				type: "exploded",
 				id: e.id
 			})) : (i = d(p - e.rectangle.angle - 90), i > 180 && (i -= 360), e.abortCurrentMovement(), e.ignoredEvents.onWallCollision || (r.ignore("onWallCollision"), this.safeCall(e.robot.instance, "onWallCollision", {
 				robot: r,
 				bearing: i
 			}), r.listen("onWallCollision"))));
-			if (e instanceof n) return r;
-			t = e.getAccidentalCollisions(), b = this.robotsStatus;
+			if (e instanceof n)
+				return r;
+			t = e.getAccidentalCollisions();
+			b = this.robotsStatus;
 			for (v = 0, g = b.length; v < g; v++) {
 				a = b[v];
 				if (a === e || !a.isAlive()) continue;

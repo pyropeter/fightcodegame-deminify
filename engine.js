@@ -15,9 +15,14 @@ var FightCodeEngine, __slice = [].slice,
 	};
 FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 	var e, t, n, r, i, s, o, u, a, f, l, c, h, p, d;
-	return o = 1, e = 1, u = Math.PI * 2, a = 180 / Math.PI, d = function (e) {
+	o = 1;
+	e = 1;
+	u = Math.PI * 2;
+	a = 180 / Math.PI;
+	d = function (e) {
 		return (e % 360 + 360) % 360
-	}, h = function () {
+	};
+	h = function () {
 		function e(t, n) {
 			this.x = t, this.y = n, this.x instanceof e && (this.y = this.x.y, this.x = this.x.x)
 		}
@@ -40,7 +45,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 		}, e.multiply = function (t, n) {
 			return new e(t.x * n, t.y * n)
 		}, e
-	}(), l = function () {
+	}();
+	l = function () {
 		function t(n) {
 			if (this.constructor !== t) return new t(n);
 			this.id = n.id;
@@ -146,20 +152,23 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			}
 		}
 		return t
-	}(), t = function () {
+	}();
+	t = function () {
 		function e(e, t) {
 			this.width = e;
 			this.height = t;
 			this.rectangle = new f(this.width / 2, this.height / 2, this.width, this.height);
 		}
 		return e
-	}(), s = function () {
+	}();
+	s = function () {
 		function e(e, t, n, r) {
 			this.p1 = new h(e, t);
 			this.p2 = new h(n, r);
 		}
 		return e
-	}(), f = function () {
+	}();
+	f = function () {
 		function e(e, t, n, r, i) {
 			e == null && (e = 0);
 			t == null && (t = 0);
@@ -239,35 +248,54 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			n = e.projectTo(t);
 			return t.x * n.x + t.y * n.y;
 		}, e
-	}(), r = function () {
+	}();
+	r = function () {
 		function e() {
 			this.id = "element" + c.id++, this.rectangle = new f
 		}
 		return e.id = 1, e.prototype.isAlive = function () {
 			return !0
 		}, e
-	}(), p = function (e) {
+	}();
+	p = function (e) {
 		function t(e, n, r, i) {
-			t.__super__.constructor.call(this), this.line = new s(e, n, r, i)
+			t.__super__.constructor.call(this);
+			this.line = new s(e, n, r, i);
 		}
 		return __extends(t, e), t
-	}(r), n = function (e) {
+	}(r);
+	n = function (e) {
 		function t(e) {
 			var n, r, i;
-			this.robotStatus = e, t.__super__.constructor.call(this), this.rectangle.setAngle(this.robotStatus.rectangle.angle + this.robotStatus.cannonAngle), n = this.rectangle.angle * Math.PI / 180, this.sinAngle = Math.sin(n), this.cosAngle = Math.cos(n), r = this.cosAngle * (this.robotStatus.rectangle.dimension.width / 2), i = this.sinAngle * (this.robotStatus.rectangle.dimension.height / 2), this.rectangle.setPosition(this.robotStatus.rectangle.position.x + r, this.robotStatus.rectangle.position.y + i), this.rectangle.setDimension(2, 2), this.speed = 2, this.strength = 10, this.running = !0
+			this.robotStatus = e;
+			t.__super__.constructor.call(this);
+			this.rectangle.setAngle(this.robotStatus.rectangle.angle + this.robotStatus.cannonAngle);
+			n = this.rectangle.angle * Math.PI / 180;
+			this.sinAngle = Math.sin(n);
+			this.cosAngle = Math.cos(n);
+			r = this.cosAngle * (this.robotStatus.rectangle.dimension.width / 2);
+			i = this.sinAngle * (this.robotStatus.rectangle.dimension.height / 2);
+			this.rectangle.setPosition(this.robotStatus.rectangle.position.x + r, this.robotStatus.rectangle.position.y + i);
+			this.rectangle.setDimension(2, 2);
+			this.speed = 2;
+			this.strength = 10;
+			this.running = !0;
 		}
 		return __extends(t, e), t.prototype.isIdle = function () {
 			return !1
 		}, t.prototype.isAlive = function () {
 			return this.running
 		}, t.prototype.runItem = function () {
-			return this.previousPosition = new h(this.rectangle.position), this.rectangle.incPosition(this.cosAngle * this.speed, this.sinAngle * this.speed), null
+			this.previousPosition = new h(this.rectangle.position);
+			this.rectangle.incPosition(this.cosAngle * this.speed, this.sinAngle * this.speed);
+			return null;
 		}, t.prototype.destroy = function () {
 			return this.running = !1
 		}, t.prototype.rollbackAfterCollision = function () {
 			if (this.previousPosition) return this.rectangle.setPosition(this.previousPosition.x, this.previousPosition.y)
 		}, t.prototype.updateQueue = function () {}, t
-	}(r), c = function (t) {
+	}(r);
+	c = function (t) {
 		function r(e, t) {
 			this.robot = e, this.arena = t, r.__super__.constructor.call(this), this._invisibleRounds = 200, this.life = 100, this.cannonAngle = 0, this.rectangle.setDimension(27, 24), this.baseScanWaitTime = 50, this.baseGunCoolDownTime = 50, this.scanWaitTime = 0, this.gunCoolDownTime = 0, this.availableClones = 1, this.availableDisappears = 1, this.queue = [], this.clones = [], this.parentStatus = null, this.bulletsFired = 0, this.bulletsHit = 0, this.bulletsTaken = 0, this.deathIdx = null, this.enemiesKilled = 0, this.friendsKilled = 0, this.ignoredEvents = {}, this.accidentalCollisions = {}, this.isInvisible = !1
 		}
@@ -404,7 +432,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 		}, r.prototype.pushEventToLog = function (e) {
 			if (this.keepTrackOfEvents) return this.roundLog.events.push(e)
 		}, r
-	}(r), i = function () {
+	}(r);
+	i = function () {
 		function e() {
 			var e, n, r, i, s, o, u, a, f, l, h;
 			a = arguments[0], e = arguments[1], r = arguments[2], i = arguments[3], n = arguments[4], u = 6 <= arguments.length ? __slice.call(arguments, 5) : [], this.maxTurns = r, this.randomFunc = i, this.keepTrackOfEvents = n, this.round = 0, this.arena = new t(a, e), this.robotsStatus = function () {
@@ -587,8 +616,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				result: n
 			}
 		}, e
-	}(),
-	function () {
+	}();
+	return function () {
 		var e, t, n, r, s, o, u, a, f;
 		return f = arguments[0], t = arguments[1], r = arguments[2], s = arguments[3], n = arguments[4], a = arguments[5], u = 7 <= arguments.length ? __slice.call(arguments, 6) : [], e = function (e, t, n) {
 			n.prototype = e.prototype;
@@ -597,7 +626,7 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				s = typeof i;
 			return s == "object" || s == "function" ? i || r : r
 		}(i, [f, t, r, s, n].concat(__slice.call(u)), function () {}), a && (e.roundLogCallback = a), o = e.fight(), o
-	}
+	};
 }();
 var SampleRobot;
 SampleRobot = function () {

@@ -148,35 +148,63 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 		return t
 	}(), t = function () {
 		function e(e, t) {
-			this.width = e, this.height = t, this.rectangle = new f(this.width / 2, this.height / 2, this.width, this.height)
+			this.width = e;
+			this.height = t;
+			this.rectangle = new f(this.width / 2, this.height / 2, this.width, this.height);
 		}
 		return e
 	}(), s = function () {
 		function e(e, t, n, r) {
-			this.p1 = new h(e, t), this.p2 = new h(n, r)
+			this.p1 = new h(e, t);
+			this.p2 = new h(n, r);
 		}
 		return e
 	}(), f = function () {
 		function e(e, t, n, r, i) {
-			e == null && (e = 0), t == null && (t = 0), n == null && (n = 1), r == null && (r = 1), this.angle = i != null ? i : 0, this.position = new h(e, t), this.setDimension(n, r), this.updateCoords()
+			e == null && (e = 0);
+			t == null && (t = 0);
+			n == null && (n = 1);
+			r == null && (r = 1);
+			this.angle = i != null ? i : 0;
+			this.position = new h(e, t);
+			this.setDimension(n, r);
+			this.updateCoords();
 		}
 		return e.prototype.setAngle = function (e) {
-			return this.angle = d(e), this.updateCoords()
+			this.angle = d(e);
+			return this.updateCoords();
 		}, e.prototype.setDimension = function (e, t) {
-			return this.dimension = {
+			this.dimension = {
 				width: e,
 				height: t
-			}, this.halfWidth = e / 2, this.halfHeight = t / 2, this.radius = Math.sqrt(this.halfWidth * this.halfWidth + this.halfHeight * this.halfHeight), this.minRadius = Math.min(this.halfWidth, this.halfHeight), this.updateCoords()
+			};
+			this.halfWidth = e / 2;
+			this.halfHeight = t / 2;
+			this.radius = Math.sqrt(this.halfWidth * this.halfWidth + this.halfHeight * this.halfHeight);
+			this.minRadius = Math.min(this.halfWidth, this.halfHeight);
+			return this.updateCoords();
 		}, e.prototype.setPosition = function (e, t) {
-			return this.position.x = e, this.position.y = t, this.updateCoords()
+			this.position.x = e;
+			this.position.y = t;
+			return this.updateCoords();
 		}, e.prototype.incPosition = function (e, t) {
-			return this.position.x += e, this.position.y += t, this.updateCoords()
+			this.position.x += e;
+			this.position.y += t;
+			return this.updateCoords();
 		}, e.prototype.updateCoords = function () {
 			var e, t, n, r;
-			return r = this.position.y - this.halfHeight, t = this.position.x - this.halfWidth, e = this.position.y + this.halfHeight, n = this.position.x + this.halfWidth, this.upperRight = (new h(n, r)).rotate(this.angle, this.position), this.upperLeft = (new h(t, r)).rotate(this.angle, this.position), this.lowerLeft = (new h(t, e)).rotate(this.angle, this.position), this.lowerRight = (new h(n, e)).rotate(this.angle, this.position)
+			r = this.position.y - this.halfHeight;
+			t = this.position.x - this.halfWidth;
+			e = this.position.y + this.halfHeight;
+			n = this.position.x + this.halfWidth;
+			this.upperRight = (new h(n, r)).rotate(this.angle, this.position);
+			this.upperLeft = (new h(t, r)).rotate(this.angle, this.position);
+			this.lowerLeft = (new h(t, e)).rotate(this.angle, this.position);
+			return this.lowerRight = (new h(n, e)).rotate(this.angle, this.position);
 		}, e.prototype.containingCollisionAngle = function (e) {
 			var t;
-			return t = this.minRadius, this.position.x - t <= e.upperLeft.x ? 270 : this.position.x + t >= e.lowerRight.x ? 90 : this.position.y - t <= e.upperLeft.y ? 360 : this.position.y + t >= e.lowerRight.y ? 180 : !1
+			t = this.minRadius;
+			return this.position.x - t <= e.upperLeft.x ? 270 : this.position.x + t >= e.lowerRight.x ? 90 : this.position.y - t <= e.upperLeft.y ? 360 : this.position.y + t >= e.lowerRight.y ? 180 : !1;
 		}, e.prototype.intersects = function (e) {
 			var t, n, r, i, s;
 			r = h.subtract(this.position, e.position).module();
@@ -189,10 +217,27 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			return !0
 		}, e.prototype.isAxisCollision = function (e, t) {
 			var n, r, i, s, o, u;
-			return o = [this.generateScalar(this.upperLeft, t), this.generateScalar(this.upperRight, t), this.generateScalar(this.lowerLeft, t), this.generateScalar(this.lowerRight, t)], u = [this.generateScalar(e.upperLeft, t), this.generateScalar(e.upperRight, t), this.generateScalar(e.lowerLeft, t), this.generateScalar(e.lowerRight, t)], i = Math.min.apply(Math, o), n = Math.max.apply(Math, o), s = Math.min.apply(Math, u), r = Math.max.apply(Math, u), i <= r && n >= r ? !0 : s <= n && r >= n ? !0 : !1
+			o = [
+				this.generateScalar(this.upperLeft, t),
+				this.generateScalar(this.upperRight, t),
+				this.generateScalar(this.lowerLeft, t),
+				this.generateScalar(this.lowerRight, t)
+			];
+			u = [
+				this.generateScalar(e.upperLeft, t),
+				this.generateScalar(e.upperRight, t),
+				this.generateScalar(e.lowerLeft, t),
+				this.generateScalar(e.lowerRight, t)
+			];
+			i = Math.min.apply(Math, o);
+			n = Math.max.apply(Math, o);
+			s = Math.min.apply(Math, u);
+			r = Math.max.apply(Math, u);
+			return i <= r && n >= r ? !0 : s <= n && r >= n ? !0 : !1;
 		}, e.prototype.generateScalar = function (e, t) {
 			var n;
-			return n = e.projectTo(t), t.x * n.x + t.y * n.y
+			n = e.projectTo(t);
+			return t.x * n.x + t.y * n.y;
 		}, e
 	}(), r = function () {
 		function e() {

@@ -43,73 +43,102 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 	}(), l = function () {
 		function t(n) {
 			if (this.constructor !== t) return new t(n);
-			this.id = n.id, this.angle = d(n.rectangle.angle + 90), this.cannonRelativeAngle = d(n.cannonAngle + 90), this.cannonAbsoluteAngle = d(this.angle + this.cannonRelativeAngle), this.position = new h(n.rectangle.position), this.life = n.life, this.gunCoolDownTime = n.gunCoolDownTime, this.availableClones = n.availableClones, this.availableDisappears = n.availableDisappears, this.parentId = n.parentStatus ? n.parentStatus.id : null, this.arenaWidth = n.arena.width, this.arenaHeight = n.arena.height, this.queue = [], this.move = function (e, t) {
+			this.id = n.id;
+			this.angle = d(n.rectangle.angle + 90);
+			this.cannonRelativeAngle = d(n.cannonAngle + 90);
+			this.cannonAbsoluteAngle = d(this.angle + this.cannonRelativeAngle);
+			this.position = new h(n.rectangle.position);
+			this.life = n.life;
+			this.gunCoolDownTime = n.gunCoolDownTime;
+			this.availableClones = n.availableClones;
+			this.availableDisappears = n.availableDisappears;
+			this.parentId = n.parentStatus ? n.parentStatus.id : null;
+			this.arenaWidth = n.arena.width;
+			this.arenaHeight = n.arena.height;
+			this.queue = [];
+			this.move = function (e, t) {
 				if (e === 0) return;
 				return this.queue.push({
 					action: "move",
 					direction: t,
 					count: Math.abs(e) / o
 				}), !0
-			}, this.ahead = function (e) {
+			};
+			this.ahead = function (e) {
 				return this.move(e, 1)
-			}, this.back = function (e) {
+			};
+			this.back = function (e) {
 				return this.move(e, -1)
-			}, this.rotateCannon = function (t) {
+			};
+			this.rotateCannon = function (t) {
 				if (t === 0) return;
 				return this.queue.push({
 					action: "rotateCannon",
 					direction: t,
 					count: Math.abs(t) / e
 				})
-			}, this.turnGunLeft = function (e) {
+			};
+			this.turnGunLeft = function (e) {
 				return this.rotateCannon(-e)
-			}, this.turnGunRight = function (e) {
+			};
+			this.turnGunRight = function (e) {
 				return this.rotateCannon(e)
-			}, this.turn = function (t) {
+			};
+			this.turn = function (t) {
 				if (t === 0) return;
 				return this.queue.push({
 					action: "turn",
 					direction: t,
 					count: Math.abs(t) / e
 				})
-			}, this.turnLeft = function (e) {
+			};
+			this.turnLeft = function (e) {
 				return this.turn(-e)
-			}, this.turnRight = function (e) {
+			};
+			this.turnRight = function (e) {
 				return this.turn(e)
-			}, this.fire = function (e) {
+			};
+			this.fire = function (e) {
 				return this.queue.push({
 					action: "fire"
 				})
-			}, this.notify = function (e) {
+			};
+			this.notify = function (e) {
 				return this.queue.push({
 					action: "notify",
 					callback: e
 				})
-			}, this.stop = function (e) {
+			};
+			this.stop = function (e) {
 				return this.queue = [{
 						action: "stop"
 					}
 				]
-			}, this.clone = function () {
+			};
+			this.clone = function () {
 				return this.queue.push({
 					action: "clone"
 				})
-			}, this.disappear = function () {
+			};
+			this.disappear = function () {
 				return this.queue.push({
 					action: "disappear"
 				})
-			}, this.log = function () {
+			};
+			this.log = function () {
 				var e;
 				return e = 1 <= arguments.length ? __slice.call(arguments, 0) : [], this.queue.push({
 					action: "log",
 					messages: e
 				})
-			}, this.ignore = function (e) {
+			};
+			this.ignore = function (e) {
 				return this.queue.push({
 					action: "ignore",
 					eventName: e
 				})
-			}, this.listen = function (e) {
+			};
+			this.listen = function (e) {
 				return this.queue.push({
 					action: "listen",
 					eventName: e

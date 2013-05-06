@@ -313,26 +313,41 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				i = this.queue.shift()
 			}
 			if (!i) return;
-			"count" in i && (i.started = !0, i.count--, i.count > 0 && this.queue.unshift(i)), r = 1, i.direction && i.direction < 0 && (r = -1), this.previousPosition = null, this.previousAngle = null, this.previousCannonAngle = null;
+			"count" in i && (i.started = !0, i.count--, i.count > 0 && this.queue.unshift(i));
+			r = 1;
+			i.direction && i.direction < 0 && (r = -1);
+			this.previousPosition = null;
+			this.previousAngle = null;
+			this.previousCannonAngle = null;
 			switch (i.action) {
 			case "move":
-				s = this.rectangle.angle * Math.PI / 180, this.previousPosition = new h(this.rectangle.position), this.rectangle.incPosition(Math.cos(s) * o * r, Math.sin(s) * o * r);
+				s = this.rectangle.angle * Math.PI / 180;
+				this.previousPosition = new h(this.rectangle.position);
+				this.rectangle.incPosition(Math.cos(s) * o * r, Math.sin(s) * o * r);
 				break;
 			case "rotateCannon":
-				this.previousCannonAngle = this.cannonAngle, this.cannonAngle += e * r, this.cannonAngle = d(this.cannonAngle);
+				this.previousCannonAngle = this.cannonAngle;
+				this.cannonAngle += e * r;
+				this.cannonAngle = d(this.cannonAngle);
 				break;
 			case "turn":
-				this.previousAngle = this.rectangle.angle, t = this.previousAngle + e * r, this.rectangle.setAngle(t);
+				this.previousAngle = this.rectangle.angle;
+				t = this.previousAngle + e * r;
+				this.rectangle.setAngle(t);
 				break;
 			case "fire":
 				if (this.gunCoolDownTime !== 0) return;
-				return this.gunCoolDownTime = this.baseGunCoolDownTime, this.bulletsFired += 1, new n(this);
+				this.gunCoolDownTime = this.baseGunCoolDownTime;
+				this.bulletsFired += 1;
+				return new n(this);
 			case "clone":
 				if (!this.availableClones) return;
-				return this.availableClones--, this.clone();
+				this.availableClones--;
+				return this.clone();
 			case "disappear":
 				if (!this.availableDisappears) return;
-				return this.availableDisappears--, this.disappear();
+				this.availableDisappears--;
+				return this.disappear();
 			case "notify":
 				i.callback && i.callback()
 			}

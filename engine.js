@@ -1,19 +1,31 @@
 /*! FightCode - v0.2.0
  * http://fightcodega.me/
  */
-var FightCodeEngine, __slice = [].slice,
-	__hasProp = {}.hasOwnProperty,
-	__extends = function (e, t) {
-		function r() {
-			this.constructor = e
-		}
-		for (var n in t) __hasProp.call(t, n) && (e[n] = t[n]);
-		return r.prototype = t.prototype, e.prototype = new r, e.__super__ = t.prototype, e
-	}, __indexOf = [].indexOf || function (e) {
-		for (var t = 0, n = this.length; t < n; t++) if (t in this && this[t] === e) return t;
-		return -1
-	};
-FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
+var __slice = [].slice;
+var __hasProp = {}.hasOwnProperty;
+var __extends = function (e, t) {
+	function r() {
+		this.constructor = e
+	}
+
+	for (var n in t)
+		if (__hasProp.call(t, n))
+			e[n] = t[n];
+
+	r.prototype = t.prototype;
+	e.prototype = new r;
+	e.__super__ = t.prototype;
+	return e;
+};
+var __indexOf = [].indexOf || function (e) {
+	for (var t = 0, n = this.length; t < n; t++)
+		if (t in this && this[t] === e)
+			return t;
+	return -1
+};
+
+var FightCodeEngine = {};
+FightCodeEngine.create_fight = function () {
 	var e, t, n, r, i, s, o, u, a, f, l, c, h, p, d;
 	o = 1;
 	e = 1;
@@ -28,7 +40,7 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.y = n;
 			this.x instanceof e && (this.y = this.x.y, this.x = this.x.x)
 		}
-		return e.prototype.rotate = function (e, t) {
+		e.prototype.rotate = function (e, t) {
 			var n, r, i, s;
 			e = e * Math.PI / 180;
 			r = Math.sin(e);
@@ -38,25 +50,33 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.x = i * n - s * r + t.x;
 			this.y = i * r + s * n + t.y;
 			return this;
-		}, e.prototype.module = function () {
+		};
+		e.prototype.module = function () {
 			return Math.sqrt(this.x * this.x + this.y * this.y);
-		}, e.prototype.projectTo = function (t) {
+		};
+		e.prototype.projectTo = function (t) {
 			var n, r, i;
 			i = this.x * t.x + this.y * t.y;
 			n = t.x * t.x + t.y * t.y;
 			r = i / n;
 			return new e(r * t.x, r * t.y);
-		}, e.prototype.dot = function (e) {
+		};
+		e.prototype.dot = function (e) {
 			return this.x * e.x + this.y * e.y
-		}, e.add = function (t, n) {
+		};
+		e.add = function (t, n) {
 			return new e(t.x + n.x, t.y + n.y)
-		}, e.subtract = function (t, n) {
+		};
+		e.subtract = function (t, n) {
 			return new e(t.x - n.x, t.y - n.y)
-		}, e.divide = function (t, n) {
+		};
+		e.divide = function (t, n) {
 			return new e(t.x / n, t.y / n)
-		}, e.multiply = function (t, n) {
+		};
+		e.multiply = function (t, n) {
 			return new e(t.x * n, t.y * n)
-		}, e
+		};
+		return e;
 	}();
 	l = function () {
 		function t(n) {
@@ -191,10 +211,11 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.setDimension(n, r);
 			this.updateCoords();
 		}
-		return e.prototype.setAngle = function (e) {
+		e.prototype.setAngle = function (e) {
 			this.angle = d(e);
 			return this.updateCoords();
-		}, e.prototype.setDimension = function (e, t) {
+		};
+		e.prototype.setDimension = function (e, t) {
 			this.dimension = {
 				width: e,
 				height: t
@@ -204,15 +225,18 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.radius = Math.sqrt(this.halfWidth * this.halfWidth + this.halfHeight * this.halfHeight);
 			this.minRadius = Math.min(this.halfWidth, this.halfHeight);
 			return this.updateCoords();
-		}, e.prototype.setPosition = function (e, t) {
+		};
+		e.prototype.setPosition = function (e, t) {
 			this.position.x = e;
 			this.position.y = t;
 			return this.updateCoords();
-		}, e.prototype.incPosition = function (e, t) {
+		};
+		e.prototype.incPosition = function (e, t) {
 			this.position.x += e;
 			this.position.y += t;
 			return this.updateCoords();
-		}, e.prototype.updateCoords = function () {
+		};
+		e.prototype.updateCoords = function () {
 			var e, t, n, r;
 			r = this.position.y - this.halfHeight;
 			t = this.position.x - this.halfWidth;
@@ -222,11 +246,13 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.upperLeft = (new h(t, r)).rotate(this.angle, this.position);
 			this.lowerLeft = (new h(t, e)).rotate(this.angle, this.position);
 			return this.lowerRight = (new h(n, e)).rotate(this.angle, this.position);
-		}, e.prototype.containingCollisionAngle = function (e) {
+		};
+		e.prototype.containingCollisionAngle = function (e) {
 			var t;
 			t = this.minRadius;
 			return this.position.x - t <= e.upperLeft.x ? 270 : this.position.x + t >= e.lowerRight.x ? 90 : this.position.y - t <= e.upperLeft.y ? 360 : this.position.y + t >= e.lowerRight.y ? 180 : !1;
-		}, e.prototype.intersects = function (e) {
+		};
+		e.prototype.intersects = function (e) {
 			var t, n, r, i, s;
 			r = h.subtract(this.position, e.position).module();
 			if (r > this.radius + e.radius) return !1;
@@ -241,7 +267,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				if (!this.isAxisCollision(e, t)) return !1
 			}
 			return !0
-		}, e.prototype.isAxisCollision = function (e, t) {
+		};
+		e.prototype.isAxisCollision = function (e, t) {
 			var n, r, i, s, o, u;
 			o = [
 				this.generateScalar(this.upperLeft, t),
@@ -260,11 +287,13 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			s = Math.min.apply(Math, u);
 			r = Math.max.apply(Math, u);
 			return i <= r && n >= r ? !0 : s <= n && r >= n ? !0 : !1;
-		}, e.prototype.generateScalar = function (e, t) {
+		};
+		e.prototype.generateScalar = function (e, t) {
 			var n;
 			n = e.projectTo(t);
 			return t.x * n.x + t.y * n.y;
-		}, e
+		};
+		return e;
 	}();
 	r = function () {
 		function e() {
@@ -298,19 +327,27 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.strength = 10;
 			this.running = !0;
 		}
-		return __extends(t, e), t.prototype.isIdle = function () {
+		__extends(t, e);
+		t.prototype.isIdle = function () {
 			return !1
-		}, t.prototype.isAlive = function () {
+		};
+		t.prototype.isAlive = function () {
 			return this.running
-		}, t.prototype.runItem = function () {
+		};
+		t.prototype.runItem = function () {
 			this.previousPosition = new h(this.rectangle.position);
 			this.rectangle.incPosition(this.cosAngle * this.speed, this.sinAngle * this.speed);
 			return null;
-		}, t.prototype.destroy = function () {
+		};
+		t.prototype.destroy = function () {
 			return this.running = !1
-		}, t.prototype.rollbackAfterCollision = function () {
+		};
+		t.prototype.rollbackAfterCollision = function () {
 			if (this.previousPosition) return this.rectangle.setPosition(this.previousPosition.x, this.previousPosition.y)
-		}, t.prototype.updateQueue = function () {}, t
+		};
+		t.prototype.updateQueue = function () {
+		};
+		return t;
 	}(r);
 	c = function (t) {
 		function r(e, t) {
@@ -340,12 +377,15 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			this.accidentalCollisions = {};
 			this.isInvisible = !1;
 		}
-		return __extends(r, t), r.deathOrder = 1, r.prototype.instantiateRobot = function () {
+		__extends(r, t);
+		r.deathOrder = 1;
+		r.prototype.instantiateRobot = function () {
 			var e;
 			e = new l(this);
 			this.robot.instance = new this.robot.constructor(e);
 			return this.updateQueue(e);
-		}, r.prototype.clone = function () {
+		};
+		r.prototype.clone = function () {
 			var e;
 			e = new r(this.robot, this.arena);
 			e.rectangle.setAngle(this.rectangle.angle);
@@ -355,17 +395,20 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			e.parentStatus = this;
 			this.clones.push(e);
 			return e;
-		}, r.prototype.disappear = function () {
+		};
+		r.prototype.disappear = function () {
 			this.isInvisible = !0, this.pushEventToLog({
 				type: "beginInvisibility",
 				id: this.id
 			})
-		}, r.prototype.decInvisibleRounds = function () {
+		};
+		r.prototype.decInvisibleRounds = function () {
 			this._invisibleRounds--, this._invisibleRounds < 0 && (this.isInvisible = !1, this.pushEventToLog({
 				type: "endInvisibility",
 				id: this.id
 			}))
-		}, r.prototype.stats = function () {
+		};
+		r.prototype.stats = function () {
 			return {
 				bulletsFired: this.clones.reduce(function (e, t) {
 					return e + t.bulletsFired
@@ -383,20 +426,26 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 					return e + t.friendsKilled
 				}, this.friendsKilled)
 			}
-		}, r.prototype.getAccidentalCollisions = function () {
+		};
+		r.prototype.getAccidentalCollisions = function () {
 			var e;
 			e = this.accidentalCollisions;
 			this.accidentalCollisions = {};
 			return e;
-		}, r.prototype.addAccidentalCollision = function (e) {
+		};
+		r.prototype.addAccidentalCollision = function (e) {
 			return this.accidentalCollisions[e.id] = !0
-		}, r.prototype.isClone = function () {
+		};
+		r.prototype.isClone = function () {
 			return !!this.parentStatus
-		}, r.prototype.isAlive = function () {
+		};
+		r.prototype.isAlive = function () {
 			return this.life > 0 && (this.parentStatus === null || this.parentStatus.life > 0)
-		}, r.prototype.isIdle = function () {
+		};
+		r.prototype.isIdle = function () {
 			return this.queue.length === 0
-		}, r.prototype.takeHit = function (e) {
+		};
+		r.prototype.takeHit = function (e) {
 			var t;
 			this.bulletsTaken++;
 			this.life -= e.strength;
@@ -406,20 +455,27 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				this.deathIdx = r.deathOrder++;
 				return e.robotStatus.parentStatus === this || (t = e.robotStatus, __indexOf.call(this.clones, t) >= 0) ? e.robotStatus.friendsKilled += 1 : e.robotStatus.enemiesKilled += 1;
 			}
-		}, r.prototype.rollbackAfterCollision = function () {
+		};
+		r.prototype.rollbackAfterCollision = function () {
 			this.previousPosition && this.rectangle.setPosition(this.previousPosition.x, this.previousPosition.y);
 			if (this.previousAngle) return this.rectangle.setAngle(this.previousAngle)
-		}, r.prototype.cannonTotalAngle = function () {
+		};
+		r.prototype.cannonTotalAngle = function () {
 			return d(this.rectangle.angle + this.cannonAngle)
-		}, r.prototype.canScan = function () {
+		};
+		r.prototype.canScan = function () {
 			return this.scanWaitTime === 0
-		}, r.prototype.tickScan = function () {
+		};
+		r.prototype.tickScan = function () {
 			if (this.scanWaitTime > 0) return this.scanWaitTime -= 1
-		}, r.prototype.preventScan = function () {
+		};
+		r.prototype.preventScan = function () {
 			return this.scanWaitTime = this.baseScanWaitTime
-		}, r.prototype.abortCurrentMovement = function () {
+		};
+		r.prototype.abortCurrentMovement = function () {
 			if (this.queue.length > 0 && this.queue[0].started) return this.queue.shift()
-		}, r.prototype.runItem = function () {
+		};
+		r.prototype.runItem = function () {
 			var t, r, i, s, u;
 			this.gunCoolDownTime > 0 && this.gunCoolDownTime--;
 			i = this.queue.shift();
@@ -485,13 +541,17 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				i.callback && i.callback()
 			}
 			return null
-		}, r.prototype.updateQueue = function (e) {
+		};
+		r.prototype.updateQueue = function (e) {
 			return e.queue.length > 0 && e.queue[0].action === "stop" ? this.queue = e.queue.slice(1) : this.queue = e.queue.concat(this.queue)
-		}, r.prototype.pushObjectToLog = function (e) {
+		};
+		r.prototype.pushObjectToLog = function (e) {
 			if (this.keepTrackOfEvents) return this.roundLog.objects.push(e)
-		}, r.prototype.pushEventToLog = function (e) {
+		};
+		r.prototype.pushEventToLog = function (e) {
 			if (this.keepTrackOfEvents) return this.roundLog.events.push(e)
-		}, r
+		};
+		return r;
 	}(r);
 	i = function () {
 		function e() {
@@ -525,7 +585,7 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				o.instantiateRobot();
 			}
 		}
-		return e.prototype.initPositions = function () {
+		e.prototype.initPositions = function () {
 			var e, t, n, r, i, s, o, u, a;
 			u = this.robotsStatus;
 			a = [];
@@ -547,9 +607,11 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				}
 			}
 			return a
-		}, e.prototype.isDraw = function () {
+		};
+		e.prototype.isDraw = function () {
 			return this.round > this.maxTurns
-		}, e.prototype.safeCall = function () {
+		};
+		e.prototype.safeCall = function () {
 			var e, t, n;
 			t = arguments[0];
 			e = arguments[1];
@@ -558,7 +620,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 			try {
 				return t[e].apply(t, n)
 			} catch (r) {}
-		}, e.prototype.intersectsAnything = function (e) {
+		};
+		e.prototype.intersectsAnything = function (e) {
 			var t, n, r, i;
 			if (e.rectangle.containingCollisionAngle(this.arena.rectangle)) return !0;
 			i = this.robotsStatus;
@@ -568,7 +631,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				if (e.rectangle.intersects(t.rectangle)) return !0
 			}
 			return !1
-		}, e.prototype.findEmptyPosition = function (e) {
+		};
+		e.prototype.findEmptyPosition = function (e) {
 			var t, n, r, i, s, o, u, a, f, l, c, h, p, d;
 			n = this.arena.width;
 			t = this.arena.height;
@@ -586,7 +650,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				}
 			}
 			return !1
-		}, e.prototype.checkCollision = function (e) {
+		};
+		e.prototype.checkCollision = function (e) {
 			var t, r, i, s, o, u, a, f, p, v, m, g, y, b, w;
 			r = e instanceof c ? new l(e) : null;
 			p = e.rectangle.containingCollisionAngle(this.arena.rectangle);
@@ -639,7 +704,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 					}), r.listen(o)))
 			}
 			return r
-		}, e.prototype.checkSight = function (e) {
+		};
+		e.prototype.checkSight = function (e) {
 			var t, n, r, i, s, o, u, a, p, d, v, m;
 			t = new l(e);
 			e.tickScan();
@@ -677,7 +743,8 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				})
 			);
 			return t;
-		}, e.prototype.basicEnemyInfo = function (e) {
+		};
+		e.prototype.basicEnemyInfo = function (e) {
 			return {
 				id: e.id,
 				position: new h(e.rectangle.position),
@@ -686,11 +753,14 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				life: e.life,
 				parentId: e.parentStatus ? e.parentStatus.id : null
 			}
-		}, e.prototype.pushObjectToLog = function (e) {
+		};
+		e.prototype.pushObjectToLog = function (e) {
 			if (this.keepTrackOfEvents) return this.roundLog.objects.push(e)
-		}, e.prototype.pushEventToLog = function (e) {
+		};
+		e.prototype.pushEventToLog = function (e) {
 			if (this.keepTrackOfEvents) return this.roundLog.events.push(e)
-		}, e.prototype.fight = function () {
+		};
+		e.prototype.fight = function () {
 			var e, t, n, r, i, s, o, u, a, f, h, p, d, v, m, g, y;
 			t = this.robotsStatus.length;
 			n = [];
@@ -764,32 +834,49 @@ FightCodeEngine = {}, FightCodeEngine.create_fight = function () {
 				robots: o,
 				result: n
 			}
-		}, e
+		};
+		return e;
 	}();
 	return function () {
 		var e, t, n, r, s, o, u, a, f;
-		return f = arguments[0], t = arguments[1], r = arguments[2], s = arguments[3], n = arguments[4], a = arguments[5], u = 7 <= arguments.length ? __slice.call(arguments, 6) : [], e = function (e, t, n) {
+		f = arguments[0];
+		t = arguments[1];
+		r = arguments[2];
+		s = arguments[3];
+		n = arguments[4];
+		a = arguments[5];
+		u = 7 <= arguments.length ? __slice.call(arguments, 6) : [];
+		e = function (e, t, n) {
 			n.prototype = e.prototype;
 			var r = new n,
 				i = e.apply(r, t),
 				s = typeof i;
 			return s == "object" || s == "function" ? i || r : r
-		}(i, [f, t, r, s, n].concat(__slice.call(u)), function () {}), a && (e.roundLogCallback = a), o = e.fight(), o
+		}(i, [f, t, r, s, n].concat(__slice.call(u)), function () {});
+		a && (e.roundLogCallback = a);
+		o = e.fight();
+		return o;
 	};
 }();
-var SampleRobot;
-SampleRobot = function () {
+
+var SampleRobot = function () {
 	function e() {}
-	return e.prototype.onIdle = function (e) {
+	e.prototype.onIdle = function (e) {
 		var t;
 		return t = e.robot, t.ahead(100), t.rotateCannon(360), t.back(100), t.rotateCannon(360)
-	}, e.prototype.onRobotCollision = function (e) {
+	};
+	e.prototype.onRobotCollision = function (e) {
 		return console.log("onRobotCollision", e)
-	}, e.prototype.onWallCollision = function (e) {}, e.prototype.onScannedRobot = function (e) {
+	};
+	e.prototype.onWallCollision = function (e) {
+	};
+	e.prototype.onScannedRobot = function (e) {
 		var t;
 		return t = e.robot, t.fire(1)
-	}, e.prototype.onHitByBullet = function (e) {
+	};
+	e.prototype.onHitByBullet = function (e) {
 		var t;
 		return t = e.robot, t.turn(e.bulletBearing)
-	}, e
+	};
+	return e;
 }();
